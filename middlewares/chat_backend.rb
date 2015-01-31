@@ -12,7 +12,8 @@ module ChatDemo
     def initialize(app)
       @app     = app
       @clients = []
-      uri = URI.parse(ENV["REDISCLOUD_URL"])
+      # redis://localhost:6379
+        uri = URI.parse(ENV["REDISCLOUD_URL"])
       @redis = Redis.new(host: uri.host, port: uri.port, password: uri.password)
       Thread.new do
         redis_sub = Redis.new(host: uri.host, port: uri.port, password: uri.password)
@@ -25,6 +26,7 @@ module ChatDemo
     end
 
     def call(env)
+      puts env
       if Faye::WebSocket.websocket?(env)
         ws = Faye::WebSocket.new(env, nil, {ping: KEEPALIVE_TIME })
         ws.on :open do |event|
