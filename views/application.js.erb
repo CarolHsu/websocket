@@ -3,6 +3,7 @@ var uri      = "ws://" + window.document.location.host + "/";
 var ws       = new WebSocket(uri);
 var data = "";
 ws.onmessage = function(message) {
+ <%#TODO: adding img id %>
   $("img").remove();
   base64_string = $.parseJSON(message.data).imgData;
   $("<img>", { "src": "data:image/png;base64," + base64_string, "width": "100%", "height": "100%"}).appendTo("#chat-text");
